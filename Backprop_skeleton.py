@@ -111,7 +111,10 @@ class NN: #Neural Network
         print(self.weightsOutput)
 
     def train(self, patterns, iterations=1):
-        None
+        for i in patterns:
+            self.propagate(i[0])
+            self.propagate(i[1])
+            self.backpropagate()
         #TODO: Train the network on all patterns for a number of iterations.
         #To measure performance each iteration: Run for 1 iteration, then count misordered pairs.
         #TODO: Training is done  like this (details in exercise text):
@@ -120,6 +123,19 @@ class NN: #Neural Network
         #-Backpropagate
 
     def countMisorderedPairs(self, patterns):
+        numRight = 0
+        numMisses = 0
+        for i in patterns:
+            outputActivationA = self.propagate(i[0])
+            outputActivationB = self.propagate(i[1])
+            if outputActivationA > outputActivationB:
+                if i[0].rating > i[1].rating:
+                    numRight += 1
+                else:
+                    numMisses += 1
+        return numMisses / (numRight+numMisses)
+
+
         #TODO: Let the network classify all pairs of patterns. The highest output determines the winner.
         #for each pair, do
         #Propagate A
