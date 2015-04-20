@@ -85,7 +85,7 @@ def runRanker(trainingset, testset):
         for i in range(len(dataInstance)):
             for j in range(len(dataInstance)):
                 if i!=j and i < j and dataInstance[i].rating != dataInstance[j].rating:
-                    testPatterns.append((dataInstance[i].features, dataInstance[j].features));
+                    testPatterns.append((dataInstance[i], dataInstance[j]));
 
         #TODO: Store the test instances into the testPatterns array, once again as pairs.
         #TODO: Hint: The testing will be easier for you if you also now order the pairs - it will make it easy to see if the ANN agrees with your ordering.

@@ -85,7 +85,9 @@ class NN: #Neural Network
         return self.outputActivation
 
     def computeOutputDelta(self):
-        None
+        Pab = logFunc(self.prevOutputActivation-self.outputActivation)
+        self.prevOutputActivation = logFuncDerivative(self.prevOutputActivation*(1-Pab))
+        self.outputActivation = logFuncDerivative(self.outputActivation*(1-Pab))
         #TODO: Implement the delta function for the output layer (see exercise text)
 
     def computeHiddenDelta(self):
@@ -101,7 +103,13 @@ class NN: #Neural Network
             self. deltaHidden[i] = logFuncDerivative(out_hb)*w_ho*diffOutputActiviation
 
     def updateWeights(self):
-        None
+        for i in range(self.numInputs):
+            for j in range(self.numHidden):
+                self.weightsInput[i][j] = self.weightsInput[i][j] + self.learningRate * (self.prevHiddenActivations[j] * self.prevInputActivations[i] - self.hiddenActivations[j] * self.inputActivation[i])
+
+        for j in range(self.numHidden):
+            self.weightsOutput[j] = self.weightsOutput[j] + self.learningRate * (self.prevOutputActivation * self.prevHiddenActivations[j] - self.outputActivation * self.hiddenActivations[j])
+
         #TODO: Update the weights of the network using the deltas (see exercise text)
 
     def backpropagate(self):
@@ -134,8 +142,8 @@ class NN: #Neural Network
         numRight = 0
         numMisses = 0
         for i in patterns:
-            outputActivationA = self.propagate(i[0])
-            outputActivationB = self.propagate(i[1])
+            outputActivationA = self.propagate(i[0].features)
+            outputActivationB = self.propagate(i[1].features)
             if outputActivationA > outputActivationB:
                 winner = i[0]
                 looser = i[1]
