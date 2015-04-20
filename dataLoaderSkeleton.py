@@ -49,7 +49,7 @@ class dataHolder:
         return dataset
 
 
-def runRanker(trainingset, testset):
+def runRanker(trainingset, testset, numIterations):
     #TODO: Insert the code for training and testing your ranker here.
     #Dataholders for training and testset
     dhTraining = dataHolder(trainingset)
@@ -96,7 +96,7 @@ def runRanker(trainingset, testset):
 
     #Check ANN performance before training
     errorList.append(nn.countMisorderedPairs(testPatterns))
-    for i in range(25):
+    for i in range(numIterations):
         print "Iteration:", i
         #Running 25 iterations, measuring testing performance after each round of training.
         #Training
@@ -104,14 +104,22 @@ def runRanker(trainingset, testset):
         #Check ANN performance after training.
         errorList.append(nn.countMisorderedPairs(testPatterns))
 
-    plt.plot(errorList)
-    plt.ylabel('Error')
-    plt.show()
-
     #TODO: Store the data returned by countMisorderedPairs and plot it, showing how training and testing errors develop.
 
-    #Viewing the error in a plot
+    return errorList
 
+numberOfRuns = 5
+numIterations = 25
 
+totErrors = [0.0 for k in range(numIterations)]
 
-runRanker("train.txt","test.txt")
+for i in range(numberOfRuns):
+    erList = runRanker("train.txt","test.txt", numIterations)
+    for j in range(len(totErrors)):
+        totErrors[j] += erList[j]
+
+for i in range(len(totErrors)):
+    totErrors[i] /= numberOfRuns
+
+plt.plot(totErrors)
+plt.show()
