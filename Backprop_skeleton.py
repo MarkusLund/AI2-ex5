@@ -85,12 +85,15 @@ class NN: #Neural Network
         return self.outputActivation
 
     def computeOutputDelta(self):
+        None
         #TODO: Implement the delta function for the output layer (see exercise text)
 
     def computeHiddenDelta(self):
+        None
         #TODO: Implement the delta function for the hidden layer (see exercise text)
 
     def updateWeights(self):
+        None
         #TODO: Update the weights of the network using the deltas (see exercise text)
 
     def backpropagate(self):
