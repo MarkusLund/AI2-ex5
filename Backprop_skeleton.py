@@ -129,10 +129,17 @@ class NN: #Neural Network
             outputActivationA = self.propagate(i[0])
             outputActivationB = self.propagate(i[1])
             if outputActivationA > outputActivationB:
-                if i[0].rating > i[1].rating:
-                    numRight += 1
-                else:
-                    numMisses += 1
+                winner = i[0]
+                looser = i[1]
+            else:
+                winner = i[1]
+                looser = i[0]
+
+            if winner.rating > looser.rating:
+                numRight += 1
+            else:
+                numMisses += 1
+
         return numMisses / (numRight+numMisses)
 
 
