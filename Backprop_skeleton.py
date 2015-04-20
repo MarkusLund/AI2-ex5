@@ -86,8 +86,8 @@ class NN: #Neural Network
 
     def computeOutputDelta(self):
         Pab = logFunc(self.prevOutputActivation-self.outputActivation)
-        self.prevOutputActivation = logFuncDerivative(self.prevOutputActivation*(1-Pab))
-        self.outputActivation = logFuncDerivative(self.outputActivation*(1-Pab))
+        self.prevDeltaOutput = logFuncDerivative(self.prevOutputActivation*(1-Pab))
+        self.deltaOutput = logFuncDerivative(self.outputActivation*(1-Pab))
         #TODO: Implement the delta function for the output layer (see exercise text)
 
     def computeHiddenDelta(self):
