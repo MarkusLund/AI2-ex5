@@ -65,9 +65,12 @@ def runRanker(trainingset, testset):
         #This iterates through every query ID in our training set
         dataInstance=dhTraining.dataset[qid] #All data instances (query, features, rating) for query qid
         dataInstance.sort();
-        for i in range(len(dataInstance)):
-            #find pairs
 
+        #Find pairs
+        for i in range(len(dataInstance)):
+            for j in range(len(dataInstance)):
+                if i!=j and i < j and dataInstance[i].rating != dataInstance[j].rating:
+                    trainingPatterns.append((dataInstance[i].features, dataInstance[j].features));
 
 
         #TODO: Store the training instances into the trainingPatterns array. Remember to store them as pairs, where the first item is rated higher than the second.
@@ -76,6 +79,13 @@ def runRanker(trainingset, testset):
     for qid in dhTesting.dataset.keys():
         #This iterates through every query ID in our test set
         dataInstance=dhTesting.dataset[qid]
+
+        #Find pairs
+        for i in range(len(dataInstance)):
+            for j in range(len(dataInstance)):
+                if i!=j and i < j and dataInstance[i].rating != dataInstance[j].rating:
+                    testPatterns.append((dataInstance[i].features, dataInstance[j].features));
+
         #TODO: Store the test instances into the testPatterns array, once again as pairs.
         #TODO: Hint: The testing will be easier for you if you also now order the pairs - it will make it easy to see if the ANN agrees with your ordering.
 
