@@ -105,10 +105,10 @@ class NN: #Neural Network
     def updateWeights(self):
         for i in range(self.numInputs):
             for j in range(self.numHidden):
-                self.weightsInput[i][j] = self.weightsInput[i][j] + self.learningRate * (self.prevHiddenActivations[j] * self.prevInputActivations[i] - self.hiddenActivations[j] * self.inputActivation[i])
+                self.weightsInput[i][j] = self.weightsInput[i][j] + self.learningRate * (self.prevDeltaHidden[j] * self.prevInputActivations[i] - self.deltaHidden[j] * self.inputActivation[i])
 
         for j in range(self.numHidden):
-            self.weightsOutput[j] = self.weightsOutput[j] + self.learningRate * (self.prevOutputActivation * self.prevHiddenActivations[j] - self.outputActivation * self.hiddenActivations[j])
+            self.weightsOutput[j] = self.weightsOutput[j] + self.learningRate * (self.prevDeltaOutput * self.prevHiddenActivations[j] - self.hiddenActivations[j] * self.deltaOutput)
 
         #TODO: Update the weights of the network using the deltas (see exercise text)
 
