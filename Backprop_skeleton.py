@@ -108,6 +108,7 @@ class NN: #Neural Network
         print(self.weightsOutput)
 
     def train(self, patterns, iterations=1):
+        None
         #TODO: Train the network on all patterns for a number of iterations.
         #To measure performance each iteration: Run for 1 iteration, then count misordered pairs.
         #TODO: Training is done  like this (details in exercise text):
