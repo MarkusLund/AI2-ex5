@@ -13,6 +13,10 @@ class dataInstance:
     def __str__(self):
         return "Datainstance - qid: "+ str(self.qid)+ ". rating: "+ str(self.rating)+ ". features: "+ str(self.features)
 
+    #Added support to write listOfDataInstances.sort()
+    def __lt__(self, other):
+         return self.rating > other.rating
+
 
 #A class that holds all the data in one of our sets (the training set or the testset)
 class dataHolder:
@@ -60,6 +64,12 @@ def runRanker(trainingset, testset):
     for qid in dhTraining.dataset.keys():
         #This iterates through every query ID in our training set
         dataInstance=dhTraining.dataset[qid] #All data instances (query, features, rating) for query qid
+        dataInstance.sort();
+        for i in range(len(dataInstance)):
+            #find pairs
+
+
+
         #TODO: Store the training instances into the trainingPatterns array. Remember to store them as pairs, where the first item is rated higher than the second.
         #TODO: Hint: A good first step to get the pair ordering right, is to sort the instances based on their rating for this query. (sort by x.rating for each x in dataInstance)
 
