@@ -1,6 +1,7 @@
 __author__ = 'kaiolae'
 __author__ = 'kaiolae'
 import Backprop_skeleton as Bp
+import matplotlib.pyplot as plt
 
 #Class for holding your data - one object for each line in the dataset
 class dataInstance:
@@ -89,17 +90,25 @@ def runRanker(trainingset, testset):
         #TODO: Store the test instances into the testPatterns array, once again as pairs.
         #TODO: Hint: The testing will be easier for you if you also now order the pairs - it will make it easy to see if the ANN agrees with your ordering.
 
+
+    #Adding all errors in a list for plotting
+    errorList = []
+
     #Check ANN performance before training
-    nn.countMisorderedPairs(testPatterns)
+    errorList.append(nn.countMisorderedPairs(testPatterns))
     for i in range(25):
         #Running 25 iterations, measuring testing performance after each round of training.
         #Training
         nn.train(trainingPatterns,iterations=1)
         #Check ANN performance after training.
-        nn.countMisorderedPairs(testPatterns)
+        errorList.append(nn.countMisorderedPairs(testPatterns))
 
     #TODO: Store the data returned by countMisorderedPairs and plot it, showing how training and testing errors develop.
 
+    #Viewing the error in a plot
+    plt.plot(errorList)
+    plt.ylabel('Error')
+    plt.show()
 
 
 runRanker("train.txt","test.txt")
