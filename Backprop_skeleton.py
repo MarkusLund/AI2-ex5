@@ -89,8 +89,16 @@ class NN: #Neural Network
         #TODO: Implement the delta function for the output layer (see exercise text)
 
     def computeHiddenDelta(self):
-        None
         #TODO: Implement the delta function for the hidden layer (see exercise text)
+        for i in range(self.numHidden):
+
+            out_ha = self.prevHiddenActivations[i]
+            out_hb = self.hiddenActivations[i]
+            w_ho = self.weightsOutput[i]
+            diffOutputActiviation = self.prevOutputActivation-self.outputActivation
+
+            self.prevDeltaHidden[i] = logFuncDerivative(out_ha)*w_ho*diffOutputActiviation
+            self. deltaHidden[i] = logFuncDerivative(out_hb)*w_ho*diffOutputActiviation
 
     def updateWeights(self):
         None
@@ -153,4 +161,3 @@ class NN: #Neural Network
         #end of for
         #TODO: Calculate the ratio of correct answers:
         #errorRate = numMisses/(numRight+numMisses)
-        pass
