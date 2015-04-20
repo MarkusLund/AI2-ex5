@@ -97,18 +97,21 @@ def runRanker(trainingset, testset):
     #Check ANN performance before training
     errorList.append(nn.countMisorderedPairs(testPatterns))
     for i in range(25):
+        print "Iteration:", i
         #Running 25 iterations, measuring testing performance after each round of training.
         #Training
         nn.train(trainingPatterns,iterations=1)
         #Check ANN performance after training.
         errorList.append(nn.countMisorderedPairs(testPatterns))
 
-    #TODO: Store the data returned by countMisorderedPairs and plot it, showing how training and testing errors develop.
-
-    #Viewing the error in a plot
     plt.plot(errorList)
     plt.ylabel('Error')
     plt.show()
+
+    #TODO: Store the data returned by countMisorderedPairs and plot it, showing how training and testing errors develop.
+
+    #Viewing the error in a plot
+
 
 
 runRanker("train.txt","test.txt")

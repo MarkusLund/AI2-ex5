@@ -139,8 +139,8 @@ class NN: #Neural Network
         #-Backpropagate
 
     def countMisorderedPairs(self, patterns):
-        numRight = 0
-        numMisses = 0
+        numRight = 0.0
+        numMisses = 0.0
         for i in patterns:
             outputActivationA = self.propagate(i[0].features)
             outputActivationB = self.propagate(i[1].features)
@@ -155,6 +155,9 @@ class NN: #Neural Network
                 numRight += 1
             else:
                 numMisses += 1
+        print "NumMisses:", numMisses
+        print "numRight:", numRight
+        print numMisses / (numRight+numMisses)
 
         return numMisses / (numRight+numMisses)
 
