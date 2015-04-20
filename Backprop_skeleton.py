@@ -97,7 +97,7 @@ class NN: #Neural Network
             out_ha = self.prevHiddenActivations[i]
             out_hb = self.hiddenActivations[i]
             w_ho = self.weightsOutput[i]
-            diffOutputActiviation = self.prevOutputActivation-self.outputActivation
+            diffOutputActiviation = self.prevDeltaOutput-self.deltaOutput
 
             self.prevDeltaHidden[i] = logFuncDerivative(out_ha)*w_ho*diffOutputActiviation
             self. deltaHidden[i] = logFuncDerivative(out_hb)*w_ho*diffOutputActiviation
