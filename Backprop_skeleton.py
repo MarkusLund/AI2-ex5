@@ -86,8 +86,8 @@ class NN: #Neural Network
 
     def computeOutputDelta(self):
         Pab = logFunc(self.prevOutputActivation-self.outputActivation)
-        self.prevDeltaOutput = logFuncDerivative(self.prevOutputActivation*(1-Pab))
-        self.deltaOutput = logFuncDerivative(self.outputActivation*(1-Pab))
+        self.prevDeltaOutput = logFuncDerivative(self.prevOutputActivation)*(1-Pab)
+        self.deltaOutput = logFuncDerivative(self.outputActivation)*(1-Pab)
         #TODO: Implement the delta function for the output layer (see exercise text)
 
     def computeHiddenDelta(self):
@@ -105,10 +105,12 @@ class NN: #Neural Network
     def updateWeights(self):
         for i in range(self.numInputs):
             for j in range(self.numHidden):
-                self.weightsInput[i][j] = self.weightsInput[i][j] + self.learningRate * (self.prevDeltaHidden[j] * self.prevInputActivations[i] - self.deltaHidden[j] * self.inputActivation[i])
+                self.weightsInput[i][j] += self.learningRate * (
+                self.prevDeltaHidden[j] * self.prevInputActivations[i] - self.deltaHidden[j] * self.inputActivation[i])
 
         for j in range(self.numHidden):
-            self.weightsOutput[j] = self.weightsOutput[j] + self.learningRate * (self.prevDeltaOutput * self.prevHiddenActivations[j] - self.hiddenActivations[j] * self.deltaOutput)
+            self.weightsOutput[j] += self.learningRate * (
+            self.prevDeltaOutput * self.prevHiddenActivations[j] - self.deltaOutput * self.hiddenActivations[j])
 
         #TODO: Update the weights of the network using the deltas (see exercise text)
 
