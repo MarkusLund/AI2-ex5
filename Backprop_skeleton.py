@@ -130,8 +130,8 @@ class NN: #Neural Network
 
     def train(self, patterns, iterations=1):
         for i in patterns:
-            self.propagate(i[0])
-            self.propagate(i[1])
+            self.propagate(i[0].features)
+            self.propagate(i[1].features)
             self.backpropagate()
         #TODO: Train the network on all patterns for a number of iterations.
         #To measure performance each iteration: Run for 1 iteration, then count misordered pairs.

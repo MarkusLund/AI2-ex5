@@ -71,7 +71,7 @@ def runRanker(trainingset, testset, numIterations):
         for i in range(len(dataInstance)):
             for j in range(len(dataInstance)):
                 if i!=j and i < j and dataInstance[i].rating != dataInstance[j].rating:
-                    trainingPatterns.append((dataInstance[i].features, dataInstance[j].features));
+                    trainingPatterns.append((dataInstance[i], dataInstance[j]));
 
 
         #TODO: Store the training instances into the trainingPatterns array. Remember to store them as pairs, where the first item is rated higher than the second.
@@ -92,34 +92,48 @@ def runRanker(trainingset, testset, numIterations):
 
 
     #Adding all errors in a list for plotting
-    errorList = []
+    errorListTest = []
+    errorListTrain = []
 
     #Check ANN performance before training
-    errorList.append(nn.countMisorderedPairs(testPatterns))
+    errorListTest.append(nn.countMisorderedPairs(testPatterns))
+    errorListTrain.append(nn.countMisorderedPairs(trainingPatterns))
     for i in range(numIterations):
         print "Iteration:", i
         #Running 25 iterations, measuring testing performance after each round of training.
         #Training
         nn.train(trainingPatterns,iterations=1)
         #Check ANN performance after training.
-        errorList.append(nn.countMisorderedPairs(testPatterns))
+        errorListTest.append(nn.countMisorderedPairs(testPatterns))
+        errorListTrain.append(nn.countMisorderedPairs(trainingPatterns))
 
     #TODO: Store the data returned by countMisorderedPairs and plot it, showing how training and testing errors develop.
 
-    return errorList
+    return errorListTest, errorListTrain
 
 numberOfRuns = 5
 numIterations = 25
 
-totErrors = [0.0 for k in range(numIterations)]
+totErrorsTest = [0.0 for k in range(numIterations)]
+totErrorsTrain = [0.0 for l in range(numIterations)]
 
 for i in range(numberOfRuns):
-    erList = runRanker("train.txt","test.txt", numIterations)
-    for j in range(len(totErrors)):
-        totErrors[j] += erList[j]
+    print "RUN:", i
+    erListTest, erListTrain = runRanker("train.txt","test.txt", numIterations)
 
-for i in range(len(totErrors)):
-    totErrors[i] /= numberOfRuns
+    for j in range(len(totErrorsTest)):
+        totErrorsTest[j] += erListTest[j]
+    for j in range(len(totErrorsTrain)):
+        totErrorsTrain[j] += erListTrain[j]
+    print ""
 
-plt.plot(totErrors)
+for i in range(len(totErrorsTest)):
+    totErrorsTest[i] /= numberOfRuns
+
+for i in range(len(totErrorsTrain)):
+    totErrorsTrain[i] /= numberOfRuns
+
+plt.plot(totErrorsTest, color="blue", linewidth=2.5, linestyle="-", label="TestData")
+plt.plot(totErrorsTrain, color="red", linewidth=2.5, linestyle="-", label="TrainData")
+plt.legend(loc='upper right')
 plt.show()
